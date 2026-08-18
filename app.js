@@ -18,6 +18,12 @@ const PORT = process.env.PORT || 3000;
 // To keep track of our active games
 const activeGames = {};
 
+//print time
+const startupNow = new Date();
+let unixTime = Math.floor(startupNow.getTime() / 1000);
+
+console.log('Current time:', startupNow);
+console.log('Unixtime: ', unixTime);
 /**
  * Interactions endpoint URL where Discord will send HTTP requests
  * Parse request body and verifies incoming requests using discord-interactions package
@@ -46,6 +52,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
     // "test" command
     if (name === 'test') {
       // Send a message into the channel where command was triggered from
+      console.log('/test proc');
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
@@ -62,8 +69,9 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
     }
 
     // "Challenge" command
-    if (name === 'challenge' && id) {
+    if (name === 'rps' && id) {
       //Interaction context
+      console.log('/rps proc');
       const context = req.body.context
 
       // User ID is in user field
@@ -103,7 +111,25 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
       ],
     },
   });
-}
+    }
+
+    if (name === 'time') {
+      console.log('/time proc');
+      const now = new Date();
+      unixTime = Math.floor(now.getTime() / 1000);
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          flags: InteractionResponseFlags.IS_COMPONENTS_V2,
+          components:[
+            {
+              type: MessageComponentTypes.TEXT_DISPLAY,
+              content: `Current time: <t:${unixTime}>`
+            }
+                    ] 
+              },
+                    });
+    }
 
 
     console.error(`unknown command: ${name}`);
@@ -113,11 +139,12 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 
   console.log('TYPE RECEIVED:', type);
 
+  //debug print command
 if (type === InteractionType.MESSAGE_COMPONENT) {
   console.log('MESSAGE COMPONENT HANDLER REACHED');
 }
-
-if (type === 3) {
+  //actual event handler
+if (type === InteractionType.MESSAGE_COMPONENT) {
   //custom_id set in payload when sending message component
   const componentId = data.custom_id;
 
@@ -183,6 +210,13 @@ if (type === 3) {
     }
 }
 
+
+
+
+
+
+
+//error handling
   console.error('unknown interaction type', type);
   return res.status(400).json({
     error: 'unknown interaction type, u havent made this yet'

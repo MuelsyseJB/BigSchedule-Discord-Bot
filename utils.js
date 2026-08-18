@@ -24,6 +24,7 @@ export async function DiscordRequest(endpoint, options) {
   return res;
 }
 
+/**
 export async function InstallGlobalCommands(appId, commands) {
   // API endpoint to overwrite global commands
   const endpoint = `applications/${appId}/commands`;
@@ -33,6 +34,27 @@ export async function InstallGlobalCommands(appId, commands) {
     await DiscordRequest(endpoint, { method: 'PUT', body: commands });
   } catch (err) {
     console.error(err);
+  }
+}
+*/
+
+//chatgpt
+export async function InstallGlobalCommands(appId, commands) {
+  const endpoint = `applications/${appId}/commands`;
+
+  console.log('Registering commands:', commands.map(c => c.name));
+  console.log('App ID:', appId);
+
+  try {
+    const response = await DiscordRequest(endpoint, {
+      method: 'PUT',
+      body: commands
+    });
+
+    console.log('Commands registered successfully!');
+    console.log('Status:', response.status);
+  } catch (err) {
+    console.error('COMMAND REGISTRATION ERROR:', err);
   }
 }
 

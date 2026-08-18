@@ -37,19 +37,19 @@ function formatResult(result) {
 // this is just to figure out winner + verb
 const RPSChoices = {
   rock: {
-    description: 'sedimentary, igneous, or perhaps even metamorphic',
+    description: 'rocky but not from movie no no no',
     virus: 'outwaits',
     computer: 'smashes',
     scissors: 'crushes',
   },
   cowboy: {
-    description: 'yeehaw~',
+    description: 'this rps game is from the beginner bot startup so theres just random poopfuck here',
     scissors: 'puts away',
     wumpus: 'lassos',
     rock: 'steel-toe kicks',
   },
-  scissors: {
-    description: 'careful ! sharp ! edges !!',
+  scissors: { 
+    description: 'gwen reference !',
     paper: 'cuts',
     computer: 'cuts cord of',
     virus: 'cuts DNA of',

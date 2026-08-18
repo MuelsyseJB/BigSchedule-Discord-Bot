@@ -27,8 +27,8 @@ const TEST_COMMAND = {
 };
 
 // Command containing options
-const CHALLENGE_COMMAND = {
-  name: 'challenge',
+const RPS_COMMAND = {
+  name: 'rps',
   description: 'Challenge to a match of rock paper scissors',
   options: [
     {
@@ -44,6 +44,15 @@ const CHALLENGE_COMMAND = {
   contexts: [0, 2],
 };
 
-const ALL_COMMANDS = [TEST_COMMAND, CHALLENGE_COMMAND];
+// Print time
+const TIME_COMMAND = {
+  name: 'time',
+  description: 'Tells the time now',
+  type: 1,
+  integration_types: [0, 1],
+  contexts: [0, 1, 2],
+};
 
+const ALL_COMMANDS = [TEST_COMMAND, RPS_COMMAND, TIME_COMMAND,];
+console.log('Registering commands:', ALL_COMMANDS.map(c => c.name));
 InstallGlobalCommands(process.env.APP_ID, ALL_COMMANDS);
